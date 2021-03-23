@@ -77,6 +77,16 @@ class Main {
       System.out.println("Your final score was " + sum + ".");
       System.out.println("Would you like to play again? (YES/NO)");
       continueGame = (input.nextLine().toLowerCase().equals("yes"));
+      if (continueGame)
+      {
+        for (int a = 0; a < gameBoard.length; a++)
+        {
+          for (int b = 0; b < gameBoard[0].length; b++)
+          {
+            gameBoard[a][b].reset();
+          }
+        }
+      }
     }
   }
 }
