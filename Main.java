@@ -30,42 +30,49 @@ class Main {
     {
       int sum = 0;
       System.out.println("How many pennies would you like to throw? (1-25)");
-      int numPennies = input.nextInt();
-      boolean checkBounds = (numPennies >= 1 && numPennies <= 25)
-      while (!checkBounds)
+      int numPennies = Integer.valueOf(input.nextLine());
+      // Checks for out of bounds numbers and loops if found
+      while (!(numPennies >= 1 && numPennies <= 25))
       {
         System.out.println("You entered an out of bounds number. Please try again.");
-        numPennies = input.nextInt();
+        numPennies = Integer.valueOf(input.nextLine());
       }
+      // Loops for input amount of times
       for (int i = 0; i < numPennies; i++)
       {
+        boolean skipLoop = false;
         int hitValue = gameBoard[(int)(Math.random() * 5)][(int)(Math.random() * 5)].hit();
+        // Checks if the slot has been hit, adds iteration to loop and skips current iteration if true
         if (hitValue != 0)
         {
           sum += hitValue;
         }
         else
         {
+          skipLoop = true;
           numPennies++;
         }
-        // Prints out board, replaces hit values with "P"
-        for (int k = 0; k < gameBoard.length; k++)
+        // Prints board, replaces hit values with "P", skips loop if square is hit again
+        if (!skipLoop)
         {
-          for (int l = 0; l < gameBoard[0].length; l++)
+          for (int k = 0; k < gameBoard.length; k++)
           {
-            if (gameBoard[k][l].getValue() == 0)
+            for (int l = 0; l < gameBoard[0].length; l++)
             {
-              System.out.print("P ");
+              if (gameBoard[k][l].getValue() == 0)
+              {
+                System.out.print("P ");
+              }
+              else
+              {
+                System.out.print(gameBoard[k][l].getValue() + " ");
+              }
             }
-            else
-            {
-              System.out.print(gameBoard[k][l].getValue() + " ");
-            }
-          }
           System.out.println("");
-        }
-        System.out.println("The current board has been displayed. Your current score is " + sum + ". Please press enter to continue.");
+          }
+        System.out.println("The board has been displayed. Your current score is " + sum + ". Please press enter to continue.");
         input.nextLine();
+        }
       }
       System.out.println("Your final score was " + sum + ".");
       System.out.println("Would you like to play again? (YES/NO)");
